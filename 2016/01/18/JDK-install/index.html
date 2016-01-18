@@ -4,26 +4,32 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | Daniel&#39;s Blog</title>
+    <title>JDK安装及环境变量配置 | Daniel&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Daniel Ye">
     
 
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+    <meta name="description" content="Windows
+从JDK官方网站下载最新版本的JDK, 或者从JDK Archive找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。
+根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以jdk-6u43-windows-i586.exe为例。
+安装的时候，默认是安装在C:\Program Files\Java 或者C:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yerida.github.io/2016/01/13/hello-world/index.html">
+<meta property="og:title" content="JDK安装及环境变量配置">
+<meta property="og:url" content="http://yerida.github.io/2016/01/18/JDK-install/index.html">
 <meta property="og:site_name" content="Daniel's Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-01-13T13:23:21.000Z">
+<meta property="og:description" content="Windows
+从JDK官方网站下载最新版本的JDK, 或者从JDK Archive找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。
+根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以jdk-6u43-windows-i586.exe为例。
+安装的时候，默认是安装在C:\Program Files\Java 或者C:">
+<meta property="og:updated_time" content="2016-01-18T15:08:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="JDK安装及环境变量配置">
+<meta name="twitter:description" content="Windows
+从JDK官方网站下载最新版本的JDK, 或者从JDK Archive找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。
+根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以jdk-6u43-windows-i586.exe为例。
+安装的时候，默认是安装在C:\Program Files\Java 或者C:">
 
     
     <link rel="alternative" href="/atom.xml" title="Daniel&#39;s Blog" type="application/atom+xml">
@@ -83,14 +89,14 @@ Quick">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/01/13/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2016/01/18/JDK-install/" title="JDK安装及环境变量配置" itemprop="url">JDK安装及环境变量配置</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Daniel Ye" target="_blank" itemprop="author">Daniel Ye</a>
 		
   <p class="article-time">
-    <time datetime="2016-01-13T13:23:21.000Z" itemprop="datePublished"> 发表于 2016-01-13</time>
+    <time datetime="2016-01-18T13:47:55.000Z" itemprop="datePublished"> 发表于 2016-01-18</time>
     
   </p>
 </header>
@@ -99,24 +105,58 @@ Quick">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-number">1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HelloWorld_u6D4B_u8BD5_u7A0B_u5E8F"><span class="toc-number">2.</span> <span class="toc-text">HelloWorld测试程序</span></a></li></ol>
 		
 		</div>
 		
-		<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start"><a href="#Quick_Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create_a_new_post"><a href="#Create_a_new_post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files"><a href="#Generate_static_files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites"><a href="#Deploy_to_remote_sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-  
+		<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><ol>
+<li>从<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">JDK官方网站</a>下载最新版本的JDK, 或者从<a href="http://www.oracle.com/technetwork/java/javase/archive-139210.html" target="_blank" rel="external">JDK Archive</a>找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。</li>
+<li>根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以<a href="http://download.oracle.com/otn/java/jdk/6u43-b01/jdk-6u43-windows-i586.exe" target="_blank" rel="external">jdk-6u43-windows-i586.exe</a>为例。</li>
+<li>安装的时候，默认是安装在<code>C:\Program Files\Java</code> 或者<code>C:\Program Files (x86)\Java</code> 路径下，强烈建议不要安装此路径下，因为这个路径的<code>Program Files</code>这个目录名中的空格有时候会引起一些问题。建议直接安装在<code>C:\Java</code> 路径下。</li>
+<li>环境变量配置（右击计算机–&gt;属性–&gt;高级系统设置–&gt;高级–&gt;环境变量）</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">变量名</th>
+<th style="text-align:left">变量值</th>
+<th style="text-align:left">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">JAVA_HOME</td>
+<td style="text-align:left"><code>C:\Java\jdk1.6.0_43</code></td>
+<td style="text-align:left">JDK安装的目录</td>
+</tr>
+<tr>
+<td style="text-align:left">Path</td>
+<td style="text-align:left"><code>;%JAVA_HOME%\bin</code></td>
+<td style="text-align:left">在原来的Path变量值后面添加</td>
+</tr>
+<tr>
+<td style="text-align:left">CLASSPATH</td>
+<td style="text-align:left"><code>.;%JAVA_HOME%\lib\tools.jar;%JAVA_HOME%\lib\dt.jar</code></td>
+<td style="text-align:left">注意，变量值里面有个”.” ，代表当前路径</td>
+</tr>
+</tbody>
+</table>
+<p>5.测试JDK是否安装成功。新打开一个cmd命令窗口，输入<code>java –version</code> , 如果有输出JDK的版本信息，则说明安装成功。可以在写个打印”Hello World”的程序测试一下。</p>
+<h2 id="HelloWorld_u6D4B_u8BD5_u7A0B_u5E8F"><a href="#HelloWorld_u6D4B_u8BD5_u7A0B_u5E8F" class="headerlink" title="HelloWorld测试程序"></a>HelloWorld测试程序</h2>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
 
 </div>
 
@@ -124,7 +164,7 @@ Quick">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yerida.github.io/2016/01/13/hello-world/" data-title="Hello World | Daniel&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yerida.github.io/2016/01/18/JDK-install/" data-title="JDK安装及环境变量配置 | Daniel&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,20 +177,20 @@ Quick">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/01/13/my-new-post/" title="Test first post">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Test first post</span>
+
+<div class="next">
+<a href="/2016/01/13/my-new-post/"  title="Test first post">
+ <strong>下一篇：</strong><br/> 
+ <span>Test first post
+</span>
 </a>
 </div>
-
 
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/01/13/hello-world/" data-title="Hello World" data-url="http://yerida.github.io/2016/01/13/hello-world/"></div>
+	<div class="ds-thread" data-thread-key="2016/01/18/JDK-install/" data-title="JDK安装及环境变量配置" data-url="http://yerida.github.io/2016/01/18/JDK-install/"></div>
 </section>
 
 
@@ -160,7 +200,7 @@ Quick">
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-number">1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HelloWorld_u6D4B_u8BD5_u7A0B_u5E8F"><span class="toc-number">2.</span> <span class="toc-text">HelloWorld测试程序</span></a></li></ol>
  
   </div>
 
