@@ -14,7 +14,7 @@
     <meta name="description" content="Windows
 从JDK官方网站下载最新版本的JDK, 或者从JDK Archive找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。
 根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以jdk-6u43-windows-i586.exe为例。
-安装的时候，默认是安装在C:\Program Files\Java 或者C:">
+安装的时候，默认是安装在C:\Program Files\Java或者C:\">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JDK安装及环境变量配置">
 <meta property="og:url" content="http://yerida.github.io/2016/01/18/JDK-install/index.html">
@@ -22,14 +22,14 @@
 <meta property="og:description" content="Windows
 从JDK官方网站下载最新版本的JDK, 或者从JDK Archive找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。
 根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以jdk-6u43-windows-i586.exe为例。
-安装的时候，默认是安装在C:\Program Files\Java 或者C:">
-<meta property="og:updated_time" content="2016-01-18T15:08:40.000Z">
+安装的时候，默认是安装在C:\Program Files\Java或者C:\">
+<meta property="og:updated_time" content="2016-01-19T14:58:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK安装及环境变量配置">
 <meta name="twitter:description" content="Windows
 从JDK官方网站下载最新版本的JDK, 或者从JDK Archive找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。
 根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以jdk-6u43-windows-i586.exe为例。
-安装的时候，默认是安装在C:\Program Files\Java 或者C:">
+安装的时候，默认是安装在C:\Program Files\Java或者C:\">
 
     
     <link rel="alternative" href="/atom.xml" title="Daniel&#39;s Blog" type="application/atom+xml">
@@ -105,14 +105,14 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-number">1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HelloWorld_u6D4B_u8BD5_u7A0B_u5E8F"><span class="toc-number">2.</span> <span class="toc-text">HelloWorld测试程序</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows"><span class="toc-number">1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux"><span class="toc-number">2.</span> <span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mac_OS_X"><span class="toc-number">3.</span> <span class="toc-text">Mac OS X</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hello_World_u6D4B_u8BD5_u7A0B_u5E8F"><span class="toc-number">4.</span> <span class="toc-text">Hello World测试程序</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><ol>
+		<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><ol>
 <li>从<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">JDK官方网站</a>下载最新版本的JDK, 或者从<a href="http://www.oracle.com/technetwork/java/javase/archive-139210.html" target="_blank" rel="external">JDK Archive</a>找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。</li>
 <li>根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以<a href="http://download.oracle.com/otn/java/jdk/6u43-b01/jdk-6u43-windows-i586.exe" target="_blank" rel="external">jdk-6u43-windows-i586.exe</a>为例。</li>
-<li>安装的时候，默认是安装在<code>C:\Program Files\Java</code> 或者<code>C:\Program Files (x86)\Java</code> 路径下，强烈建议不要安装此路径下，因为这个路径的<code>Program Files</code>这个目录名中的空格有时候会引起一些问题。建议直接安装在<code>C:\Java</code> 路径下。</li>
+<li>安装的时候，默认是安装在<code>C:\Program Files\Java</code>或者<code>C:\Program Files (x86)\Java</code>路径下，强烈建议不要安装在此路径下，因为这个路径的<code>Program Files</code>目录名中的空格有时候会引起一些问题。建议直接安装在<code>C:\Java</code>路径下。</li>
 <li>环境变量配置（右击计算机–&gt;属性–&gt;高级系统设置–&gt;高级–&gt;环境变量）</li>
 </ol>
 <table>
@@ -141,8 +141,51 @@
 </tr>
 </tbody>
 </table>
-<p>5.测试JDK是否安装成功。新打开一个cmd命令窗口，输入<code>java –version</code> , 如果有输出JDK的版本信息，则说明安装成功。可以在写个打印”Hello World”的程序测试一下。</p>
-<h2 id="HelloWorld_u6D4B_u8BD5_u7A0B_u5E8F"><a href="#HelloWorld_u6D4B_u8BD5_u7A0B_u5E8F" class="headerlink" title="HelloWorld测试程序"></a>HelloWorld测试程序</h2>  
+<p>5.测试JDK是否安装成功。<strong>新打开</strong>一个cmd命令窗口，输入<code>java –version</code>, 如果有输出JDK的版本信息，则说明安装成功。可以在写个打印”Hello World”的程序测试一下。</p>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><p><em>这里以<a href="http://download.oracle.com/otn/java/jdk/6u45-b06/jdk-6u45-linux-i586.bin" target="_blank" rel="external">jdk-6u45-linux-i586.bin</a>为例</em></p>
+<ol>
+<li>在安装之前，先查看系统是否已经预装了OpenJDK软件，可以在终端执行以下命令。<br><code>java -version</code>如果有输出OpenJDK相关的信息，说明系统已经预装了OpenJDK软件，需要先卸载OpenJDK，卸载方法到网上搜索。</li>
+<li>下载安装包<a href="http://download.oracle.com/otn/java/jdk/6u45-b06/jdk-6u45-linux-i586.bin" target="_blank" rel="external">jdk-6u45-linux-i586.bin</a>。假设安装包下载到<code>/home/yerida/Downloads</code>目录。</li>
+<li><p>进入<code>/usr/local</code>目录，在该目录下创建一个java子目录,并进入该java子目录,命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$cd</span> /usr/<span class="built_in">local</span></span><br><span class="line"><span class="variable">$sudo</span> mkdir java</span><br><span class="line"><span class="variable">$cd</span> java</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将安装包复制到该java目录，并为该安装包添加执行权限。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> cp /home/yerida/Downloads/jdk-<span class="number">6</span>u45-linux-i586.bin /usr/<span class="built_in">local</span>/java  </span><br><span class="line"><span class="variable">$cd</span> /usr/<span class="built_in">local</span>/java  </span><br><span class="line"><span class="variable">$sudo</span> chmod a+x jdk-<span class="number">6</span>u45-linux-i586.bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行该安装包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> ./jdk-<span class="number">6</span>u45-linux-i586.bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装后<code>/usr/local/java</code>目录下多了一个<code>jdk1.6.0_45</code>子目录,创建一个软连接指向该目录,并删除安装包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> ln <span class="operator">-s</span> jdk1.<span class="number">6.0</span>_45 jdk  </span><br><span class="line"><span class="variable">$sudo</span> rm jdk-<span class="number">6</span>u45-linux-i586.bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置环境变量。用VIM打开<code>/etc/profile</code>文件.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> vim /etc/profile</span><br></pre></td></tr></table></figure>
+<p>在文件末尾添加如下内容，保存并退出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr/local/java/jdk&#10;JRE_HOME=$JAVA_HOME/jre&#10;PATH=$JAVA_HOME/bin:$PATH&#10;CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/toos.jar&#10;export JAVA_HOME JRE_HOME PATH CLASSPATH</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使配置立即生效。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试安装是否成功。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$java</span> -version</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Mac_OS_X"><a href="#Mac_OS_X" class="headerlink" title="Mac OS X"></a>Mac OS X</h1><p>Mac OS X系统下可以使用<code>brew cask</code>来安装JDK，这种方法非常简单。</p>
+<ol>
+<li><p>首先用以下命令查找可用的JDK安装包。<br><code>brew cask search java</code></p>
+</li>
+<li><p>安装最新版本的JDK使用如下命令<br><code>brew cask install java</code></p>
+</li>
+<li><p>如果要安装其他版本的JDK<br>JDK7安装 <code>brew cask search java7</code><br>JDK6安装 <code>brew cask search java6</code></p>
+</li>
+<li>测试安装是否成功。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$java</span> -version</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><em>Mac OS X系统下无需在配置环境变量,如果系统安装了多个JDK，使用IDE开发的时候可以指定具体的版本，终端下可以写个脚本来切换。</em></p>
+<h1 id="Hello_World_u6D4B_u8BD5_u7A0B_u5E8F"><a href="#Hello_World_u6D4B_u8BD5_u7A0B_u5E8F" class="headerlink" title="Hello World测试程序"></a>Hello World测试程序</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello World!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译：<br><code>$javac HelloWorld.java</code></p>
+<p>运行：<br><code>$java HelloWorld</code></p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -200,7 +243,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-number">1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HelloWorld_u6D4B_u8BD5_u7A0B_u5E8F"><span class="toc-number">2.</span> <span class="toc-text">HelloWorld测试程序</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows"><span class="toc-number">1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux"><span class="toc-number">2.</span> <span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mac_OS_X"><span class="toc-number">3.</span> <span class="toc-text">Mac OS X</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hello_World_u6D4B_u8BD5_u7A0B_u5E8F"><span class="toc-number">4.</span> <span class="toc-text">Hello World测试程序</span></a></li></ol>
  
   </div>
 
