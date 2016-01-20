@@ -4,23 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Test first post | Daniel&#39;s Blog</title>
+    <title>Linux write系统调用问题(对齐问题) | Daniel&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Daniel Ye">
     
 
     
-    <meta name="description" content="测试这是 H2这是 H6">
+    <meta name="description" content="最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。
+程序1：12345678#include &amp;lt;unistd.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;int main() &amp;#123;    if ((write(1, &quot;Here is some data\n&quot;, 18)) != 18)        write(2, &quot;A error has occ">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Test first post">
-<meta property="og:url" content="http://yerida.github.io/2016/01/13/my-new-post/index.html">
+<meta property="og:title" content="Linux write系统调用问题(对齐问题)">
+<meta property="og:url" content="http://yerida.github.io/2012/01/20/Linux-Write-System-Call-Problem/index.html">
 <meta property="og:site_name" content="Daniel's Blog">
-<meta property="og:description" content="测试这是 H2这是 H6">
-<meta property="og:updated_time" content="2016-01-13T15:11:03.000Z">
+<meta property="og:description" content="最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。
+程序1：12345678#include &amp;lt;unistd.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;int main() &amp;#123;    if ((write(1, &quot;Here is some data\n&quot;, 18)) != 18)        write(2, &quot;A error has occ">
+<meta property="og:updated_time" content="2016-01-20T13:28:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Test first post">
-<meta name="twitter:description" content="测试这是 H2这是 H6">
+<meta name="twitter:title" content="Linux write系统调用问题(对齐问题)">
+<meta name="twitter:description" content="最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。
+程序1：12345678#include &amp;lt;unistd.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;int main() &amp;#123;    if ((write(1, &quot;Here is some data\n&quot;, 18)) != 18)        write(2, &quot;A error has occ">
 
     
     <link rel="alternative" href="/atom.xml" title="Daniel&#39;s Blog" type="application/atom+xml">
@@ -80,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/01/13/my-new-post/" title="Test first post" itemprop="url">Test first post</a>
+      <a href="/2012/01/20/Linux-Write-System-Call-Problem/" title="Linux write系统调用问题(对齐问题)" itemprop="url">Linux write系统调用问题(对齐问题)</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Daniel Ye" target="_blank" itemprop="author">Daniel Ye</a>
 		
   <p class="article-time">
-    <time datetime="2016-01-13T14:16:50.000Z" itemprop="datePublished"> 发表于 2016-01-13</time>
+    <time datetime="2012-01-20T12:55:45.000Z" itemprop="datePublished"> 发表于 2012-01-20</time>
     
   </p>
 </header>
@@ -96,11 +99,23 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#u6D4B_u8BD5"><span class="toc-number">1.</span> <span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#u8FD9_u662F_H2"><span class="toc-number">1.1.</span> <span class="toc-text">这是 H2</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#u8FD9_u662F_H6"><span class="toc-number">1.1.0.0.0.1.</span> <span class="toc-text">这是 H6</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+			
 		
 		</div>
 		
-		<h1 id="u6D4B_u8BD5"><a href="#u6D4B_u8BD5" class="headerlink" title="测试"></a>测试</h1><h2 id="u8FD9_u662F_H2"><a href="#u8FD9_u662F_H2" class="headerlink" title="这是 H2"></a>这是 H2</h2><h6 id="u8FD9_u662F_H6"><a href="#u8FD9_u662F_H6" class="headerlink" title="这是 H6"></a>这是 H6</h6><hr>
+		<p>最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。</p>
+<p>程序1：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((write(<span class="number">1</span>, <span class="string">"Here is some data\n"</span>, <span class="number">18</span>)) != <span class="number">18</span>)</span><br><span class="line">        write(<span class="number">2</span>, <span class="string">"A error has occured on file descriptior 1\n"</span>, <span class="number">42</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>编译后在终端中运行，运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some data</span><br></pre></td></tr></table></figure></p>
+<p>如果稍微改变一下write的实参值，将第一个write函数的第三个参数改为17，运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some data A error has occured on file descriptior 1</span><br></pre></td></tr></table></figure></p>
+<p>将18改为20，在终端中运行的结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some data&#10;A error has occured on file descriptior 1</span><br></pre></td></tr></table></figure></p>
+<p>此程序没有疑问。</p>
+<p>程序2：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nb;</span><br><span class="line">    nb = (<span class="keyword">int</span>)write(<span class="number">1</span>, <span class="string">"Here is some\n"</span>, <span class="number">18</span>);</span><br><span class="line">    <span class="keyword">if</span> (nb != <span class="number">18</span>)</span><br><span class="line">        write(<span class="number">2</span>, <span class="string">"A error has occured on file descriptior 1\n"</span>, <span class="number">42</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\nThe value returned by the function write is %d\n"</span>, nb);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>编译运行后的结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some&#10;A&#10;The value returned by function write is 18</span><br></pre></td></tr></table></figure></p>
+<p>程序2运行后，第二行为什么会输出一个A ？ 这个A明显是if语句块里的那个write函数的结果。如果nb的值确实是18，那么按理来说，if语句就不会执行，就不会有这个A；如果nb的值不是18，那么按理第二行应该输出：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A error has occured on file descriptior 1\n</span><br></pre></td></tr></table></figure></p>
+<p>原因分析如下：</p>
+<p>常量字符串按顺序存储在常量区域的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;Here is some\n&#34;&#10;&#34;A error has occured on file descriptior 1\n&#34;</span><br></pre></td></tr></table></figure></p>
+<p>这两个常量字符串的地址是紧挨着的, 当第一个字符串的访问越界后就访问到第二个字符串了。</p>
+<p>考虑下对齐，指针的地址通常需要是 32 位对齐，也就是 4 的倍数。所以前面的 14 个字符会被多填充两个 0 来对齐到 16 个字节，在加上后面的 A 和一个空格, 刚好 18 个。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -108,13 +123,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/blog/">blog</a>
+  <a class="article-category-link" href="/categories/C/">C</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Blog/">Blog</a>
+  <span></span> <a href="/tags/C-C/">C/C++</a><a href="/tags/Linux/">Linux</a>
   </div>
 
 </div>
@@ -123,7 +138,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yerida.github.io/2016/01/13/my-new-post/" data-title="Test first post | Daniel&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yerida.github.io/2012/01/20/Linux-Write-System-Call-Problem/" data-title="Linux write系统调用问题(对齐问题) | Daniel&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,27 +152,19 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/01/18/JDK-install/" title="JDK安装及环境变量配置">
+ <a href="/2016/01/13/hello-world/" title="Hello World">
   <strong>上一篇：</strong><br/>
   <span>
-  JDK安装及环境变量配置</span>
+  Hello World</span>
 </a>
 </div>
 
-
-<div class="next">
-<a href="/2016/01/13/hello-world/"  title="Hello World">
- <strong>下一篇：</strong><br/> 
- <span>Hello World
-</span>
-</a>
-</div>
 
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/01/13/my-new-post/" data-title="Test first post" data-url="http://yerida.github.io/2016/01/13/my-new-post/"></div>
+	<div class="ds-thread" data-thread-key="2012/01/20/Linux-Write-System-Call-Problem/" data-title="Linux write系统调用问题(对齐问题)" data-url="http://yerida.github.io/2012/01/20/Linux-Write-System-Call-Problem/"></div>
 </section>
 
 
@@ -167,7 +174,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#u6D4B_u8BD5"><span class="toc-number">1.</span> <span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#u8FD9_u662F_H2"><span class="toc-number">1.1.</span> <span class="toc-text">这是 H2</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#u8FD9_u662F_H6"><span class="toc-number">1.1.0.0.0.1.</span> <span class="toc-text">这是 H6</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+ 
  
   </div>
 

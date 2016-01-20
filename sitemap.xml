@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yerida.github.io/2012/01/20/Linux-Write-System-Call-Problem/</loc>
+    <lastmod>2016-01-20T13:28:37.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yerida.github.io/2016/01/18/JDK-install/</loc>
     <lastmod>2016-01-19T14:58:48.000Z</lastmod>
   </url>
