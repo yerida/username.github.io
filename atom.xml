@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Stay hungry，Stay foolish]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yerida.github.io/"/>
-  <updated>2016-01-19T14:58:48.000Z</updated>
+  <updated>2016-01-24T14:06:12.000Z</updated>
   <id>http://yerida.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yerida.github.io/2016/01/18/JDK-install/"/>
     <id>http://yerida.github.io/2016/01/18/JDK-install/</id>
     <published>2016-01-18T13:47:55.000Z</published>
-    <updated>2016-01-19T14:58:48.000Z</updated>
+    <updated>2016-01-24T14:06:12.000Z</updated>
     <content type="html"><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><ol>
 <li>从<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">JDK官方网站</a>下载最新版本的JDK, 或者从<a href="http://www.oracle.com/technetwork/java/javase/archive-139210.html" target="_blank" rel="external">JDK Archive</a>找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。</li>
 <li>根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以<a href="http://download.oracle.com/otn/java/jdk/6u43-b01/jdk-6u43-windows-i586.exe" target="_blank" rel="external">jdk-6u43-windows-i586.exe</a>为例。</li>
@@ -92,7 +92,7 @@
 <li>测试安装是否成功。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$java</span> -version</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p><em>Mac OS X系统下无需在配置环境变量,如果系统安装了多个JDK，使用IDE开发的时候可以指定具体的版本，终端下可以写个脚本来切换。</em></p>
+<p>Mac OS X系统按以上步骤安装好后<strong>无需</strong>在配置JAVA_HOME环境变量,如果系统安装了多个JDK，使用IDE开发的时候可以指定具体的版本，终端下可以使用<code>/usr/libexec/java_home</code>命令来查找JAVA_HOME或者切换JDK版本。参考Apple官方文档：<a href="https://developer.apple.com/library/mac/qa/qa1170/_index.html" target="_blank" rel="external">Important Java Directories on Mac OS X</a></p>
 <h1 id="Hello_World_u6D4B_u8BD5_u7A0B_u5E8F"><a href="#Hello_World_u6D4B_u8BD5_u7A0B_u5E8F" class="headerlink" title="Hello World测试程序"></a>Hello World测试程序</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello World!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>编译：<br><code>$javac HelloWorld.java</code></p>
 <p>运行：<br><code>$java HelloWorld</code></p>
@@ -153,14 +153,16 @@
     <link href="http://yerida.github.io/2012/01/20/Linux-Write-System-Call-Problem/"/>
     <id>http://yerida.github.io/2012/01/20/Linux-Write-System-Call-Problem/</id>
     <published>2012-01-20T12:55:45.000Z</published>
-    <updated>2016-01-20T13:28:37.000Z</updated>
+    <updated>2016-01-21T14:33:49.000Z</updated>
     <content type="html"><![CDATA[<p>最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。</p>
-<p>程序1：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((write(<span class="number">1</span>, <span class="string">"Here is some data\n"</span>, <span class="number">18</span>)) != <span class="number">18</span>)</span><br><span class="line">        write(<span class="number">2</span>, <span class="string">"A error has occured on file descriptior 1\n"</span>, <span class="number">42</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>程序1：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((write(<span class="number">1</span>, <span class="string">"Here is some data\n"</span>, <span class="number">18</span>)) != <span class="number">18</span>)</span><br><span class="line">        write(<span class="number">2</span>, <span class="string">"A error has occured on file descriptior 1\n"</span>, <span class="number">42</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>编译后在终端中运行，运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some data</span><br></pre></td></tr></table></figure></p>
 <p>如果稍微改变一下write的实参值，将第一个write函数的第三个参数改为17，运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some data A error has occured on file descriptior 1</span><br></pre></td></tr></table></figure></p>
 <p>将18改为20，在终端中运行的结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some data&#10;A error has occured on file descriptior 1</span><br></pre></td></tr></table></figure></p>
 <p>此程序没有疑问。</p>
-<p>程序2：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nb;</span><br><span class="line">    nb = (<span class="keyword">int</span>)write(<span class="number">1</span>, <span class="string">"Here is some\n"</span>, <span class="number">18</span>);</span><br><span class="line">    <span class="keyword">if</span> (nb != <span class="number">18</span>)</span><br><span class="line">        write(<span class="number">2</span>, <span class="string">"A error has occured on file descriptior 1\n"</span>, <span class="number">42</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\nThe value returned by the function write is %d\n"</span>, nb);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>程序2：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nb;</span><br><span class="line">    nb = (<span class="keyword">int</span>)write(<span class="number">1</span>, <span class="string">"Here is some\n"</span>, <span class="number">18</span>);</span><br><span class="line">    <span class="keyword">if</span> (nb != <span class="number">18</span>)</span><br><span class="line">        write(<span class="number">2</span>, <span class="string">"A error has occured on file descriptior 1\n"</span>, <span class="number">42</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\nThe value returned by the function write is %d\n"</span>, nb);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>编译运行后的结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some&#10;A&#10;The value returned by function write is 18</span><br></pre></td></tr></table></figure></p>
 <p>程序2运行后，第二行为什么会输出一个A ？ 这个A明显是if语句块里的那个write函数的结果。如果nb的值确实是18，那么按理来说，if语句就不会执行，就不会有这个A；如果nb的值不是18，那么按理第二行应该输出：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A error has occured on file descriptior 1\n</span><br></pre></td></tr></table></figure></p>
 <p>原因分析如下：</p>
@@ -170,14 +172,15 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<p>最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。</p>
-<p>程序1：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1<]]>
+<p>程序1：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1]]>
     </summary>
     
       <category term="C/C++" scheme="http://yerida.github.io/tags/C-C/"/>
     
       <category term="Linux" scheme="http://yerida.github.io/tags/Linux/"/>
     
-      <category term="C" scheme="http://yerida.github.io/categories/C/"/>
+      <category term="C/C++" scheme="http://yerida.github.io/categories/C-C/"/>
     
   </entry>
   

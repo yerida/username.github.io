@@ -23,7 +23,7 @@
 从JDK官方网站下载最新版本的JDK, 或者从JDK Archive找早期的版本（目前JDK6还是很流行的，某些情况下，需要安装早期的版本），这里以JDK6作为例子。
 根据操作系统的位数，32位下载X86安装包,  64位的下载X64的安装包。这里以jdk-6u43-windows-i586.exe为例。
 安装的时候，默认是安装在C:\Program Files\Java或者C:\">
-<meta property="og:updated_time" content="2016-01-19T14:58:48.000Z">
+<meta property="og:updated_time" content="2016-01-24T14:06:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK安装及环境变量配置">
 <meta name="twitter:description" content="Windows
@@ -181,7 +181,7 @@
 <li>测试安装是否成功。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$java</span> -version</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p><em>Mac OS X系统下无需在配置环境变量,如果系统安装了多个JDK，使用IDE开发的时候可以指定具体的版本，终端下可以写个脚本来切换。</em></p>
+<p>Mac OS X系统按以上步骤安装好后<strong>无需</strong>在配置JAVA_HOME环境变量,如果系统安装了多个JDK，使用IDE开发的时候可以指定具体的版本，终端下可以使用<code>/usr/libexec/java_home</code>命令来查找JAVA_HOME或者切换JDK版本。参考Apple官方文档：<a href="https://developer.apple.com/library/mac/qa/qa1170/_index.html" target="_blank" rel="external">Important Java Directories on Mac OS X</a></p>
 <h1 id="Hello_World_u6D4B_u8BD5_u7A0B_u5E8F"><a href="#Hello_World_u6D4B_u8BD5_u7A0B_u5E8F" class="headerlink" title="Hello World测试程序"></a>Hello World测试程序</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello World!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>编译：<br><code>$javac HelloWorld.java</code></p>
 <p>运行：<br><code>$java HelloWorld</code></p>
@@ -267,7 +267,7 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/C/" title="C">C<sup>1</sup></a></li>
+			<li><a href="/categories/C-C/" title="C/C++">C/C++<sup>1</sup></a></li>
 		  
 		
 		  
@@ -296,13 +296,11 @@
 			
 		
 			
-				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/C-C/" title="C/C++">C/C++<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 			
 		
 		</ul>
