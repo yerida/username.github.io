@@ -4,29 +4,50 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Linux write系统调用问题(对齐问题) | Daniel&#39;s Blog</title>
+    <title>IntelliJ IDEA 15常用快捷键(Mac) | Daniel&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Daniel Ye">
     
 
     
-    <meta name="description" content="最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。
-程序1：
-12345678#include &amp;lt;unistd.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;int main() &amp;#123;    if ((write(1, &quot;Here is some data\n&quot;, 18)) != 18)        write(2, &quot;A error has oc">
+    <meta name="description" content="通过名字查找功能    ⇧⌘A
+显示可用的功能列表 ⌥⏎
+视图切换    ⌥F1
+在工具窗口切换，编辑器里已打开的文件切换    ⌃⇥
+显示导航栏     ⌘↑
+插入live template.     ⌘J
+Surround with a live template.    ⌥⌘J
+从项目或者其他树形视图编辑条目    ⌘↓
+代码注释和取消注释    ⌘/  ⌥⌘/
+通过名字查找类或者文件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux write系统调用问题(对齐问题)">
-<meta property="og:url" content="http://yerida.github.io/2012/01/20/Linux-Write-System-Call-Problem/index.html">
+<meta property="og:title" content="IntelliJ IDEA 15常用快捷键(Mac)">
+<meta property="og:url" content="http://yerida.github.io/2015/05/13/intellij-idea-15-keyboard-shortcuts-you-cannot-miss/index.html">
 <meta property="og:site_name" content="Daniel's Blog">
-<meta property="og:description" content="最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。
-程序1：
-12345678#include &amp;lt;unistd.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;int main() &amp;#123;    if ((write(1, &quot;Here is some data\n&quot;, 18)) != 18)        write(2, &quot;A error has oc">
-<meta property="og:updated_time" content="2016-01-21T14:33:49.000Z">
+<meta property="og:description" content="通过名字查找功能    ⇧⌘A
+显示可用的功能列表 ⌥⏎
+视图切换    ⌥F1
+在工具窗口切换，编辑器里已打开的文件切换    ⌃⇥
+显示导航栏     ⌘↑
+插入live template.     ⌘J
+Surround with a live template.    ⌥⌘J
+从项目或者其他树形视图编辑条目    ⌘↓
+代码注释和取消注释    ⌘/  ⌥⌘/
+通过名字查找类或者文件">
+<meta property="og:updated_time" content="2016-02-03T15:48:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux write系统调用问题(对齐问题)">
-<meta name="twitter:description" content="最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。
-程序1：
-12345678#include &amp;lt;unistd.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;int main() &amp;#123;    if ((write(1, &quot;Here is some data\n&quot;, 18)) != 18)        write(2, &quot;A error has oc">
+<meta name="twitter:title" content="IntelliJ IDEA 15常用快捷键(Mac)">
+<meta name="twitter:description" content="通过名字查找功能    ⇧⌘A
+显示可用的功能列表 ⌥⏎
+视图切换    ⌥F1
+在工具窗口切换，编辑器里已打开的文件切换    ⌃⇥
+显示导航栏     ⌘↑
+插入live template.     ⌘J
+Surround with a live template.    ⌥⌘J
+从项目或者其他树形视图编辑条目    ⌘↓
+代码注释和取消注释    ⌘/  ⌥⌘/
+通过名字查找类或者文件">
 
     
     <link rel="alternative" href="/atom.xml" title="Daniel&#39;s Blog" type="application/atom+xml">
@@ -86,14 +107,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2012/01/20/Linux-Write-System-Call-Problem/" title="Linux write系统调用问题(对齐问题)" itemprop="url">Linux write系统调用问题(对齐问题)</a>
+      <a href="/2015/05/13/intellij-idea-15-keyboard-shortcuts-you-cannot-miss/" title="IntelliJ IDEA 15常用快捷键(Mac)" itemprop="url">IntelliJ IDEA 15常用快捷键(Mac)</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Daniel Ye" target="_blank" itemprop="author">Daniel Ye</a>
 		
   <p class="article-time">
-    <time datetime="2012-01-20T12:55:45.000Z" itemprop="datePublished"> 发表于 2012-01-20</time>
+    <time datetime="2015-05-13T07:58:01.000Z" itemprop="datePublished"> 发表于 2015-05-13</time>
     
   </p>
 </header>
@@ -106,35 +127,40 @@
 		
 		</div>
 		
-		<p>最近在学习Linux C 编程，碰到一个关于write系统调用的疑问。</p>
-<p>程序1：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((write(<span class="number">1</span>, <span class="string">"Here is some data\n"</span>, <span class="number">18</span>)) != <span class="number">18</span>)</span><br><span class="line">        write(<span class="number">2</span>, <span class="string">"A error has occured on file descriptior 1\n"</span>, <span class="number">42</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译后在终端中运行，运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some data</span><br></pre></td></tr></table></figure></p>
-<p>如果稍微改变一下write的实参值，将第一个write函数的第三个参数改为17，运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some data A error has occured on file descriptior 1</span><br></pre></td></tr></table></figure></p>
-<p>将18改为20，在终端中运行的结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some data&#10;A error has occured on file descriptior 1</span><br></pre></td></tr></table></figure></p>
-<p>此程序没有疑问。</p>
-<p>程序2：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nb;</span><br><span class="line">    nb = (<span class="keyword">int</span>)write(<span class="number">1</span>, <span class="string">"Here is some\n"</span>, <span class="number">18</span>);</span><br><span class="line">    <span class="keyword">if</span> (nb != <span class="number">18</span>)</span><br><span class="line">        write(<span class="number">2</span>, <span class="string">"A error has occured on file descriptior 1\n"</span>, <span class="number">42</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\nThe value returned by the function write is %d\n"</span>, nb);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译运行后的结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Here is some&#10;A&#10;The value returned by function write is 18</span><br></pre></td></tr></table></figure></p>
-<p>程序2运行后，第二行为什么会输出一个A ？ 这个A明显是if语句块里的那个write函数的结果。如果nb的值确实是18，那么按理来说，if语句就不会执行，就不会有这个A；如果nb的值不是18，那么按理第二行应该输出：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A error has occured on file descriptior 1\n</span><br></pre></td></tr></table></figure></p>
-<p>原因分析如下：</p>
-<p>常量字符串按顺序存储在常量区域的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;Here is some\n&#34;&#10;&#34;A error has occured on file descriptior 1\n&#34;</span><br></pre></td></tr></table></figure></p>
-<p>这两个常量字符串的地址是紧挨着的, 当第一个字符串的访问越界后就访问到第二个字符串了。</p>
-<p>考虑下对齐，指针的地址通常需要是 32 位对齐，也就是 4 的倍数。所以前面的 14 个字符会被多填充两个 0 来对齐到 16 个字节，在加上后面的 A 和一个空格, 刚好 18 个。</p>
+		<ul>
+<li>通过名字查找功能    <code>⇧⌘A</code></li>
+<li>显示可用的功能列表 <code>⌥⏎</code></li>
+<li>视图切换    <code>⌥F1</code></li>
+<li>在工具窗口切换，编辑器里已打开的文件切换    <code>⌃⇥</code></li>
+<li>显示导航栏     <code>⌘↑</code></li>
+<li>插入live template.     <code>⌘J</code></li>
+<li>Surround with a live template.    <code>⌥⌘J</code></li>
+<li>从项目或者其他树形视图编辑条目    <code>⌘↓</code></li>
+<li>代码注释和取消注释    <code>⌘/</code>  <code>⌥⌘/</code></li>
+<li>通过名字查找类或者文件    <code>⌘O</code>   <code>⇧⌘O</code></li>
+<li>复制当前行或者选中的区域    <code>⌘D</code></li>
+<li>Incremental expression selection.    <code>⌥↑</code> and <code>⌥↓</code></li>
+<li>在当前文件内查找文本    <code>⌘F</code></li>
+<li>在当前的项目或者指定的目录查找文本    <code>⇧⌘F</code></li>
+<li>Search everywhere.    <code>按两下Shift</code></li>
+<li>Quick view the usages of the selected symbol.    <code>⇧⌘F7</code></li>
+<li>在编辑器里展开或折叠代码块     <code>⌘+</code>  <code>⌘-</code></li>
+<li>Invoke code completion.    <code>⌃Space</code></li>
+<li>Smart statement completion.    <code>⇧⌘⏎</code></li>
+<li><p>代码智能补全    <code>⌃⇧Space</code></p>
+<p>完整快捷键列表:<a href="https://www.jetbrains.com/idea/help/keyboard-shortcuts-by-category.html" target="_blank" rel="external">https://www.jetbrains.com/idea/help/keyboard-shortcuts-by-category.html</a></p>
+<p>Keymap:<a href="https://www.jetbrains.com/idea/help/keymap.html" target="_blank" rel="external">https://www.jetbrains.com/idea/help/keymap.html</a></p>
+</li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/C-C/">C/C++</a>
-</div>
-
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/C-C/">C/C++</a><a href="/tags/Linux/">Linux</a>
+  <span></span> <a href="/tags/IDE/">IDE</a>
   </div>
 
 </div>
@@ -143,7 +169,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yerida.github.io/2012/01/20/Linux-Write-System-Call-Problem/" data-title="Linux write系统调用问题(对齐问题) | Daniel&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yerida.github.io/2015/05/13/intellij-idea-15-keyboard-shortcuts-you-cannot-miss/" data-title="IntelliJ IDEA 15常用快捷键(Mac) | Daniel&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -156,19 +182,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2013/04/26/design-pattern-singleton-pattern/" title="设计模式——单例模式">
-  <strong>上一篇：</strong><br/>
-  <span>
-  设计模式——单例模式</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2011/01/18/JDK-install/"  title="JDK安装及环境变量配置">
+<a href="/2014/03/02/visual-git-guide/"  title="图解Git">
  <strong>下一篇：</strong><br/> 
- <span>JDK安装及环境变量配置
+ <span>图解Git
 </span>
 </a>
 </div>
@@ -177,7 +195,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2012/01/20/Linux-Write-System-Call-Problem/" data-title="Linux write系统调用问题(对齐问题)" data-url="http://yerida.github.io/2012/01/20/Linux-Write-System-Call-Problem/"></div>
+	<div class="ds-thread" data-thread-key="2015/05/13/intellij-idea-15-keyboard-shortcuts-you-cannot-miss/" data-title="IntelliJ IDEA 15常用快捷键(Mac)" data-url="http://yerida.github.io/2015/05/13/intellij-idea-15-keyboard-shortcuts-you-cannot-miss/"></div>
 </section>
 
 

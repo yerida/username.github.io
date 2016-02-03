@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Stay hungry，Stay foolish]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yerida.github.io/"/>
-  <updated>2016-02-03T13:19:54.000Z</updated>
+  <updated>2016-02-03T15:48:12.000Z</updated>
   <id>http://yerida.github.io/</id>
   
   <author>
@@ -13,6 +13,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[IntelliJ IDEA 15常用快捷键(Mac)]]></title>
+    <link href="http://yerida.github.io/2015/05/13/intellij-idea-15-keyboard-shortcuts-you-cannot-miss/"/>
+    <id>http://yerida.github.io/2015/05/13/intellij-idea-15-keyboard-shortcuts-you-cannot-miss/</id>
+    <published>2015-05-13T07:58:01.000Z</published>
+    <updated>2016-02-03T15:48:12.000Z</updated>
+    <content type="html"><![CDATA[<ul>
+<li>通过名字查找功能    <code>⇧⌘A</code></li>
+<li>显示可用的功能列表 <code>⌥⏎</code></li>
+<li>视图切换    <code>⌥F1</code></li>
+<li>在工具窗口切换，编辑器里已打开的文件切换    <code>⌃⇥</code></li>
+<li>显示导航栏     <code>⌘↑</code></li>
+<li>插入live template.     <code>⌘J</code></li>
+<li>Surround with a live template.    <code>⌥⌘J</code></li>
+<li>从项目或者其他树形视图编辑条目    <code>⌘↓</code></li>
+<li>代码注释和取消注释    <code>⌘/</code>  <code>⌥⌘/</code></li>
+<li>通过名字查找类或者文件    <code>⌘O</code>   <code>⇧⌘O</code></li>
+<li>复制当前行或者选中的区域    <code>⌘D</code></li>
+<li>Incremental expression selection.    <code>⌥↑</code> and <code>⌥↓</code></li>
+<li>在当前文件内查找文本    <code>⌘F</code></li>
+<li>在当前的项目或者指定的目录查找文本    <code>⇧⌘F</code></li>
+<li>Search everywhere.    <code>按两下Shift</code></li>
+<li>Quick view the usages of the selected symbol.    <code>⇧⌘F7</code></li>
+<li>在编辑器里展开或折叠代码块     <code>⌘+</code>  <code>⌘-</code></li>
+<li>Invoke code completion.    <code>⌃Space</code></li>
+<li>Smart statement completion.    <code>⇧⌘⏎</code></li>
+<li><p>代码智能补全    <code>⌃⇧Space</code></p>
+<p>完整快捷键列表:<a href="https://www.jetbrains.com/idea/help/keyboard-shortcuts-by-category.html" target="_blank" rel="external">https://www.jetbrains.com/idea/help/keyboard-shortcuts-by-category.html</a></p>
+<p>Keymap:<a href="https://www.jetbrains.com/idea/help/keymap.html" target="_blank" rel="external">https://www.jetbrains.com/idea/help/keymap.html</a></p>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<ul>
+<li>通过名字查找功能    <code>⇧⌘A</code></li>
+<li>显示可用的功能列表 <code>⌥⏎</code></li>
+<li>视图切换    <code>⌥F1</code></li>
+<li>在工具窗口切换，编辑器里已打开的文件切换    ]]>
+    </summary>
+    
+      <category term="IDE" scheme="http://yerida.github.io/tags/IDE/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[图解Git]]></title>
@@ -91,7 +135,7 @@
     <link href="http://yerida.github.io/2013/04/26/design-pattern-singleton-pattern/"/>
     <id>http://yerida.github.io/2013/04/26/design-pattern-singleton-pattern/</id>
     <published>2013-04-26T07:18:27.000Z</published>
-    <updated>2016-02-03T13:48:18.000Z</updated>
+    <updated>2016-02-03T14:06:19.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u5355_u4F8B_u6A21_u5F0F_u4ECB_u7ECD"><a href="#u5355_u4F8B_u6A21_u5F0F_u4ECB_u7ECD" class="headerlink" title="单例模式介绍"></a>单例模式介绍</h2><p>单例模式是设计模式中最简单的形式之一。这一模式的目的是使得类的一个对象成为系统中的唯一实例。要实现这一点，可以从客户端对其进行实例化开始。因此需要用一种只允许生成对象类的唯一实例的机制，“阻止”所有想要生成对象的访问。使用工厂方法来限制实例化过程。这个方法应该是静态方法（类方法），因为让类的实例去生成另一个唯一实例毫无意义。</p>
 <p><strong>关键点：</strong></p>
 <p>单例模式的要点有三个:</p>
