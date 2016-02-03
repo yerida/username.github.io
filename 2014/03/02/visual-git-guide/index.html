@@ -1,0 +1,591 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>图解Git | Daniel&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Daniel Ye">
+    
+
+    
+    <meta name="description" content="此页图解git中的最常用命令。如果你稍微理解git的工作原理，这篇文章能够让你理解的更透彻。
+基本用法
+上面的四条命令在工作目录、暂存目录(也叫做索引)和仓库之间复制文件。
+
+git add files 把当前文件放入暂存区域。
+git commit 给暂存区域生成快照并提交。
+git reset -- files 用来撤销最后一次git add files，你也可以用git reset 撤销所有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解Git">
+<meta property="og:url" content="http://yerida.github.io/2014/03/02/visual-git-guide/index.html">
+<meta property="og:site_name" content="Daniel's Blog">
+<meta property="og:description" content="此页图解git中的最常用命令。如果你稍微理解git的工作原理，这篇文章能够让你理解的更透彻。
+基本用法
+上面的四条命令在工作目录、暂存目录(也叫做索引)和仓库之间复制文件。
+
+git add files 把当前文件放入暂存区域。
+git commit 给暂存区域生成快照并提交。
+git reset -- files 用来撤销最后一次git add files，你也可以用git reset 撤销所有">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/basic-usage.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/basic-usage-2.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/conventions.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/diff.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/commit-master.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/commit-maint.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/checkout-files.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/checkout-branch.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/checkout-detached.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/commit-detached.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/checkout-after-detached.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/checkout-b-detached.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/reset-commit.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/reset.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/reset-files.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/merge-ff.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/merge.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/cherry-pick.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/rebase.svg">
+<meta property="og:image" content="http://marklodato.github.io/visual-git-guide/rebase-onto.svg">
+<meta property="og:updated_time" content="2016-02-03T13:19:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图解Git">
+<meta name="twitter:description" content="此页图解git中的最常用命令。如果你稍微理解git的工作原理，这篇文章能够让你理解的更透彻。
+基本用法
+上面的四条命令在工作目录、暂存目录(也叫做索引)和仓库之间复制文件。
+
+git add files 把当前文件放入暂存区域。
+git commit 给暂存区域生成快照并提交。
+git reset -- files 用来撤销最后一次git add files，你也可以用git reset 撤销所有">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Daniel&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpeg" alt="Daniel&#39;s Blog" title="Daniel&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Daniel&#39;s Blog">Daniel&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Stay hungry，Stay foolish</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" class="st-default-search-input" maxlength="20" placeholder="搜索" />
+						</form>
+
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/03/02/visual-git-guide/" title="图解Git" itemprop="url">图解Git</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Daniel Ye" target="_blank" itemprop="author">Daniel Ye</a>
+		
+  <p class="article-time">
+    <time datetime="2014-03-02T05:42:33.000Z" itemprop="datePublished"> 发表于 2014-03-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u57FA_u672C_u7528_u6CD5"><span class="toc-number">1.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u7EA6_u5B9A"><span class="toc-number">2.</span> <span class="toc-text">约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u547D_u4EE4_u8BE6_u89E3"><span class="toc-number">3.</span> <span class="toc-text">命令详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Diff"><span class="toc-number">3.1.</span> <span class="toc-text">Diff</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commit"><span class="toc-number">3.2.</span> <span class="toc-text">Commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Checkout"><span class="toc-number">3.3.</span> <span class="toc-text">Checkout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reset"><span class="toc-number">3.4.</span> <span class="toc-text">Reset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Merge"><span class="toc-number">3.5.</span> <span class="toc-text">Merge</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cherry_Pick"><span class="toc-number">3.6.</span> <span class="toc-text">Cherry Pick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rebase"><span class="toc-number">3.7.</span> <span class="toc-text">Rebase</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6280_u672F_u8BF4_u660E"><span class="toc-number">4.</span> <span class="toc-text">技术说明</span></a></li></ol>
+		
+		</div>
+		
+		<p>此页图解git中的最常用命令。如果你稍微理解git的工作原理，这篇文章能够让你理解的更透彻。</p>
+<h2 id="u57FA_u672C_u7528_u6CD5"><a href="#u57FA_u672C_u7528_u6CD5" class="headerlink" title="基本用法"></a>基本用法</h2><p><img src="http://marklodato.github.io/visual-git-guide/basic-usage.svg" alt=""></p>
+<p>上面的四条命令在工作目录、暂存目录(也叫做索引)和仓库之间复制文件。</p>
+<ul>
+<li><code>git add files</code> 把当前文件放入暂存区域。</li>
+<li><code>git commit</code> 给暂存区域生成快照并提交。</li>
+<li><code>git reset -- files</code> 用来撤销最后一次<code>git add files</code>，你也可以用<code>git reset</code> 撤销所有暂存区域文件。</li>
+<li><code>git checkout -- files</code> 把文件从暂存区域复制到工作目录，用来丢弃本地修改。<br>你可以用 <code>git reset -p</code>, <code>git checkout -p</code>, or <code>git add -p</code>进入交互模式。</li>
+</ul>
+<p>也可以跳过暂存区域直接从仓库取出文件或者直接提交代码。</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/basic-usage-2.svg" alt=""></p>
+<ul>
+<li><code>git commit -a</code> 相当于运行 <code>git add</code> 把所有当前目录下的文件加入暂存区域再运行 <code>git commit</code>.</li>
+<li><code>git commit files</code> 进行一次包含最后一次提交加上工作目录中文件快照的提交。并且文件被添加到暂存区域。</li>
+<li><code>git checkout HEAD -- files</code> 回滚到复制最后一次提交。</li>
+</ul>
+<h2 id="u7EA6_u5B9A"><a href="#u7EA6_u5B9A" class="headerlink" title="约定"></a>约定</h2><p>后文中以下面的形式使用图片。<br><img src="http://marklodato.github.io/visual-git-guide/conventions.svg" alt=""></p>
+<p>绿色的5位字符表示提交的ID，分别指向父节点。分支用橘色显示，分别指向特定的提交。当前分支由附在其上的<em>HEAD</em>标识。 这张图片里显示最后5次提交，<em>ed489</em>是最新提交。 <em>master</em>分支指向此次提交，另一个<em>maint</em>分支指向祖父提交节点。</p>
+<h2 id="u547D_u4EE4_u8BE6_u89E3"><a href="#u547D_u4EE4_u8BE6_u89E3" class="headerlink" title="命令详解"></a>命令详解</h2><h3 id="Diff"><a href="#Diff" class="headerlink" title="Diff"></a>Diff</h3><p>有许多种方法查看两次提交之间的变动。下面是一些示例。<br><img src="http://marklodato.github.io/visual-git-guide/diff.svg" alt=""></p>
+<h3 id="Commit"><a href="#Commit" class="headerlink" title="Commit"></a>Commit</h3><p><code>commit</code>提交时，git用暂存区域的文件创建一个新的提交，并把此时的节点设为父节点。然后把当前分支指向新的提交节点。下图中，当前分支是<em>master</em>。 在运行命令之前，<em>master</em>指向<em>ed489</em>，提交后，<em>master</em>指向新的节点<em>f0cec</em>并以<em>ed489</em>作为父节点。<br><img src="http://marklodato.github.io/visual-git-guide/commit-master.svg" alt=""></p>
+<p>即便当前分支是某次提交的祖父节点，git会同样操作。下图中，在<em>master</em>分支的祖父节点<em>maint</em>分支进行一次提交，生成了<em>1800b</em>。 这样，<em>maint</em>分支就不再是<em>master</em>分支的祖父节点。此时，合并(<code>merge</code>) 或者 衍合(<code>rebase</code>) 是必须的。<br><img src="http://marklodato.github.io/visual-git-guide/commit-maint.svg" alt=""></p>
+<p>如果想更改一次提交，使用 <code>git commit --amend</code>。git会使用与当前提交相同的父节点进行一次新提交，旧的提交会被取消。</p>
+<p>另一个例子是分离HEAD提交,后文讲。</p>
+<h3 id="Checkout"><a href="#Checkout" class="headerlink" title="Checkout"></a>Checkout</h3><p><code>checkout</code>命令用于从历史提交（或者暂存区域）中拷贝文件到工作目录，也可用于切换分支。</p>
+<p>当给定某个文件名（或者打开｀-p｀选项，或者文件名和｀-p｀选项同时打开）时，git会从指定的提交中拷贝文件到暂存区域和工作目录。比如，<code>git checkout HEAD~ foo.c</code>会将提交节点<em>HEAD~</em>(即当前提交节点的父节点)中的foo.c复制到工作目录并且加到暂存区域中。（如果命令中没有指定提交节点，则会从暂存区域中拷贝内容。）注意当前分支不会发生变化。</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/checkout-files.svg" alt=""></p>
+<p>当不指定文件名，而是给出一个（本地）分支时，那么<em>HEAD</em>标识会移动到那个分支（也就是说，我们“切换”到那个分支了），然后暂存区域和工作目录中的内容会和<em>HEAD</em>对应的提交节点一致。新提交节点（下图中的<em>a47c3</em>）中的所有文件都会被复制（到暂存区域和工作目录中）；只存在于老的提交节点（<em>ed489</em>）中的文件会被删除；不属于上述两者的文件会被忽略，不受影响。</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/checkout-branch.svg" alt=""></p>
+<p>如果既没有指定文件名，也没有指定分支名，而是一个标签、远程分支、SHA-1值或者是像master~3类似的东西，就得到一个匿名分支，称作<em>detached HEAD</em>（被分离的<em>HEAD</em>标识）。这样可以很方便地在历史版本之间互相切换。比如说你想要编译1.6.6.1版本的git，你可以运行<code>git checkout v1.6.6.1</code>（这是一个标签，而非分支名），编译，安装，然后切换回另一个分支，比如说<code>git checkout master</code>。然而，当提交操作涉及到“分离的HEAD”时，其行为会略有不同，详情见在下面。<br><img src="http://marklodato.github.io/visual-git-guide/checkout-detached.svg" alt=""></p>
+<p><strong>HEAD标识处于分离状态时的提交操作</strong></p>
+<p>当<em>HEAD</em>处于分离状态（不依附于任一分支）时，提交操作可以正常进行，但是不会更新任何已命名的分支。(你可以认为这是在更新一个匿名分支。)</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/commit-detached.svg" alt=""></p>
+<p>一旦此后你切换到别的分支，比如说<em>master</em>，那么这个提交节点（可能）再也不会被引用到，然后就会被丢弃掉了。注意这个命令之后就不会有东西引用<em>2eecb</em>。</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/checkout-after-detached.svg" alt=""></p>
+<p>但是，如果你想保存这个状态，可以用命令<code>git checkout -b name</code>来创建一个新的分支。<br><img src="http://marklodato.github.io/visual-git-guide/checkout-b-detached.svg" alt=""></p>
+<h3 id="Reset"><a href="#Reset" class="headerlink" title="Reset"></a>Reset</h3><p><code>reset</code>命令把当前分支指向另一个位置，并且有选择的变动工作目录和索引。也用来在从历史仓库中复制文件到索引，而不动工作目录。</p>
+<p>如果不给选项，那么当前分支指向到那个提交。如果用<code>--hard</code>选项，那么工作目录也更新，如果用<code>--soft</code>选项，那么都不变。</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/reset-commit.svg" alt=""></p>
+<p>如果没有给出提交点的版本号，那么默认用<em>HEAD</em>。这样，分支指向不变，但是索引会回滚到最后一次提交，如果用<code>--hard</code>选项，工作目录也同样。</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/reset.svg" alt=""></p>
+<p>如果给了文件名(或者 <code>-p</code>选项), 那么工作效果和带文件名的checkout差不多，除了索引被更新。</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/reset-files.svg" alt=""></p>
+<h3 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h3><p><code>merge</code> 命令把不同分支合并起来。合并前，索引必须和当前提交相同。如果另一个分支是当前提交的祖父节点，那么合并命令将什么也不做。 另一种情况是如果当前提交是另一个分支的祖父节点，就导致<em>fast-forward</em>合并。指向只是简单的移动，并生成一个新的提交。</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/merge-ff.svg" alt=""></p>
+<p>否则就是一次真正的合并。默认把当前提交(<em>ed489</em> 如下所示)和另一个提交(<em>33104</em>)以及他们的共同祖父节点(<em>b325c</em>)进行一次三方合并。结果是先保存当前目录和索引，然后和父节点<em>33104</em>一起做一次新提交。<br><img src="http://marklodato.github.io/visual-git-guide/merge.svg" alt=""></p>
+<h3 id="Cherry_Pick"><a href="#Cherry_Pick" class="headerlink" title="Cherry Pick"></a>Cherry Pick</h3><p><code>cherry-pick</code>命令”复制”一个提交节点并在当前分支做一次完全一样的新提交。<br><img src="http://marklodato.github.io/visual-git-guide/cherry-pick.svg" alt=""></p>
+<h3 id="Rebase"><a href="#Rebase" class="headerlink" title="Rebase"></a>Rebase</h3><p><code>rebase</code>(衍合)是合并命令的另一种选择。合并把两个父分支合并进行一次提交，提交历史不是线性的。衍合在当前分支上重演另一个分支的历史，提交历史是线性的。 本质上，这是线性化的自动的 cherry-pick<br><img src="http://marklodato.github.io/visual-git-guide/rebase.svg" alt=""></p>
+<p>上面的命令都在<em>topic</em>分支中进行，而不是<em>master</em>分支，在<em>master</em>分支上重演，并且把分支指向新的节点。注意旧提交没有被引用，将被回收。</p>
+<p>要限制回滚范围，使用<code>--onto</code>选项。下面的命令在<em>master</em>分支上重演当前分支从<em>169a6</em>以来的最近几个提交，即<em>2c33a</em>。</p>
+<p><img src="http://marklodato.github.io/visual-git-guide/rebase-onto.svg" alt=""></p>
+<p>同样有<code>git rebase --interactive</code>让你更方便的完成一些复杂操作，比如丢弃、重排、修改、合并提交。没有图片体现这些，细节看这里:<a href="https://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode" target="_blank" rel="external">git-rebase(1)</a></p>
+<h2 id="u6280_u672F_u8BF4_u660E"><a href="#u6280_u672F_u8BF4_u660E" class="headerlink" title="技术说明"></a>技术说明</h2><p>文件内容并没有真正存储在索引(<em>.git/index</em>)或者提交对象中，而是以blob的形式分别存储在数据库中(<em>.git/objects</em>)，并用SHA-1值来校验。 索引文件用识别码列出相关的blob文件以及别的数据。对于提交来说，以树(<em>tree</em>)的形式存储，同样用对于的哈希值识别。树对应着工作目录中的文件夹，树中包含的 树或者blob对象对应着相应的子目录和文件。每次提交都存储下它的上一级树的识别码。</p>
+<p>如果用<code>detached HEAD</code>提交，那么最后一次提交会被the reflog for HEAD引用。但是过一段时间就失效，最终被回收，与<code>git commit --amend</code>或者<code>git rebase</code>很像。</p>
+<blockquote>
+<p>原文地址: <a href="http://marklodato.github.io/visual-git-guide/index-zh-cn.html" target="_blank" rel="external">http://marklodato.github.io/visual-git-guide/index-zh-cn.html</a></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Git/">Git</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yerida.github.io/2014/03/02/visual-git-guide/" data-title="图解Git | Daniel&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2013/04/26/design-pattern-singleton-pattern/"  title="设计模式——单例模式">
+ <strong>下一篇：</strong><br/> 
+ <span>设计模式——单例模式
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2014/03/02/visual-git-guide/" data-title="图解Git" data-url="http://yerida.github.io/2014/03/02/visual-git-guide/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u57FA_u672C_u7528_u6CD5"><span class="toc-number">1.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u7EA6_u5B9A"><span class="toc-number">2.</span> <span class="toc-text">约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u547D_u4EE4_u8BE6_u89E3"><span class="toc-number">3.</span> <span class="toc-text">命令详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Diff"><span class="toc-number">3.1.</span> <span class="toc-text">Diff</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commit"><span class="toc-number">3.2.</span> <span class="toc-text">Commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Checkout"><span class="toc-number">3.3.</span> <span class="toc-text">Checkout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reset"><span class="toc-number">3.4.</span> <span class="toc-text">Reset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Merge"><span class="toc-number">3.5.</span> <span class="toc-text">Merge</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cherry_Pick"><span class="toc-number">3.6.</span> <span class="toc-text">Cherry Pick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rebase"><span class="toc-number">3.7.</span> <span class="toc-text">Rebase</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6280_u672F_u8BF4_u660E"><span class="toc-number">4.</span> <span class="toc-text">技术说明</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="yerida" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/C-C/" title="C/C++">C/C++<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-C/" title="C/C++">C/C++<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,World! <br/>
+			</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/yerida" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Daniel Ye">Daniel Ye</a>
+		
+		
+		</p>
+
+		<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','CzBsTosyC-ehCD3yfiLY','2.0.0');
+</script>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yerida"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?cb65ce2afca0d500ca56964ac2525a4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
+
+
+<a href="https://github.com/yerida"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
