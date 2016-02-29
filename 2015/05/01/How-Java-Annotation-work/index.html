@@ -1,0 +1,566 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Java中的注解(Annotation)工作原理 | Daniel&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Daniel Ye">
+    
+
+    
+    <meta name="description" content="引言Java从5.0版本引入注解，现在它已经是Java平台中非常重要的一部分。开发过程中，我们也时常在应用代码中会看到诸如@Override，@Deprecated这样的注解。这里主要介绍注解的工作原理和编程实现。
+
+什么是注解(Annotation)？用一个词就可以描述注解，那就是元数据，即一种描述数据的数据。所以，可以说注解就是源代码的元数据。比如，下面这段代码：
+1234@Overridep">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中的注解(Annotation)工作原理">
+<meta property="og:url" content="http://yerida.github.io/2015/05/01/How-Java-Annotation-work/index.html">
+<meta property="og:site_name" content="Daniel's Blog">
+<meta property="og:description" content="引言Java从5.0版本引入注解，现在它已经是Java平台中非常重要的一部分。开发过程中，我们也时常在应用代码中会看到诸如@Override，@Deprecated这样的注解。这里主要介绍注解的工作原理和编程实现。
+
+什么是注解(Annotation)？用一个词就可以描述注解，那就是元数据，即一种描述数据的数据。所以，可以说注解就是源代码的元数据。比如，下面这段代码：
+1234@Overridep">
+<meta property="og:image" content="http://www.importnew.com/wp-content/uploads/2014/03/55211fcb7df719e4ccdff7569873be0a.png">
+<meta property="og:updated_time" content="2016-02-29T16:32:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java中的注解(Annotation)工作原理">
+<meta name="twitter:description" content="引言Java从5.0版本引入注解，现在它已经是Java平台中非常重要的一部分。开发过程中，我们也时常在应用代码中会看到诸如@Override，@Deprecated这样的注解。这里主要介绍注解的工作原理和编程实现。
+
+什么是注解(Annotation)？用一个词就可以描述注解，那就是元数据，即一种描述数据的数据。所以，可以说注解就是源代码的元数据。比如，下面这段代码：
+1234@Overridep">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Daniel&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpeg" alt="Daniel&#39;s Blog" title="Daniel&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Daniel&#39;s Blog">Daniel&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Stay hungry，Stay foolish</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" class="st-default-search-input" maxlength="20" placeholder="搜索" />
+						</form>
+
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/01/How-Java-Annotation-work/" title="Java中的注解(Annotation)工作原理" itemprop="url">Java中的注解(Annotation)工作原理</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Daniel Ye" target="_blank" itemprop="author">Daniel Ye</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-30T16:16:08.000Z" itemprop="datePublished"> 发表于 2015-05-01</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4EC0_u4E48_u662F_u6CE8_u89E3_28Annotation_29_uFF1F"><span class="toc-number">2.</span> <span class="toc-text">什么是注解(Annotation)？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4E3A_u4EC0_u4E48_u8981_u5F15_u5165_u6CE8_u89E3_uFF1F"><span class="toc-number">3.</span> <span class="toc-text">为什么要引入注解？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Annotation_u662F_u5982_u4F55_u5DE5_u4F5C_u7684_uFF1F_u600E_u4E48_u7F16_u5199_u81EA_u5B9A_u4E49_u7684Annotation_uFF1F"><span class="toc-number">4.</span> <span class="toc-text">Annotation是如何工作的？怎么编写自定义的Annotation？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ADF__28_u5E94_u7528_u7A0B_u5E8F_u6846_u67B6_29_u548C_u6CE8_u89E3"><span class="toc-number">5.</span> <span class="toc-text">ADF (应用程序框架)和注解</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="u5F15_u8A00"><a href="#u5F15_u8A00" class="headerlink" title="引言"></a>引言</h2><p>Java从5.0版本引入注解，现在它已经是Java平台中非常重要的一部分。开发过程中，我们也时常在应用代码中会看到诸如<code>@Override</code>，<code>@Deprecated</code>这样的注解。这里主要介绍注解的工作原理和编程实现。</p>
+<p><img src="http://www.importnew.com/wp-content/uploads/2014/03/55211fcb7df719e4ccdff7569873be0a.png" alt=""></p>
+<h2 id="u4EC0_u4E48_u662F_u6CE8_u89E3_28Annotation_29_uFF1F"><a href="#u4EC0_u4E48_u662F_u6CE8_u89E3_28Annotation_29_uFF1F" class="headerlink" title="什么是注解(Annotation)？"></a>什么是注解(Annotation)？</h2><p>用一个词就可以描述注解，那就是元数据，即一种描述数据的数据。所以，可以说注解就是源代码的元数据。比如，下面这段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"This is String Representation of current object."</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码中，重写了toString()方法并使用了<code>@Override</code>注解。但是，即使不使用<code>@Override</code>注解标记代码，程序也能够正常执行。那么，该注解表示什么？这么写有什么好处吗？事实上，<code>@Override</code>告诉编译器这个方法是一个重写方法(描述方法的元数据)，如果父类中不存在该方法，编译器便会报错，提示该方法没有重写父类中的方法。如果不小心拼写错误，例如将toString()写成了toStrring(){double r}，并且没有使用<code>@Override</code>注解，那程序依然能编译运行。但运行结果会和期望的不相同。现在我们了解了什么是注解，并且使用注解有助于阅读程序。</p>
+<p>Annotation是一种应用于类、方法、参数、变量、构造器及包声明中的特殊修饰符。它是一种由<code>JSR-175</code>标准选择用来描述元数据的一种工具。</p>
+<h2 id="u4E3A_u4EC0_u4E48_u8981_u5F15_u5165_u6CE8_u89E3_uFF1F"><a href="#u4E3A_u4EC0_u4E48_u8981_u5F15_u5165_u6CE8_u89E3_uFF1F" class="headerlink" title="为什么要引入注解？"></a>为什么要引入注解？</h2><p>使用Annotation之前(甚至在使用之后)，XML被广泛的应用于描述元数据。不知何时开始一些应用开发人员和架构师发现XML的维护越来越糟糕了。他们希望使用一些和代码紧耦合的东西，而不是像XML那样和代码是松耦合的(在某些情况下甚至是完全分离的)代码描述。如果你在Google中搜索“XML vs. annotations”，会看到许多关于这个问题的辩论。最有趣的是XML配置其实就是为了分离代码和配置而引入的。上述两种观点可能会让你很疑惑，两者观点似乎构成了一种循环，但各有利弊。下面我们通过一个例子来理解这两者的区别。</p>
+<p>假如你想为应用设置很多的常量或参数，这种情况下，XML是一个很好的选择，因为它不会同特定的代码相连。如果你想把某个方法声明为服务，那么使用Annotation会更好一些，因为这种情况下需要注解和方法紧密耦合起来，开发人员也必须认识到这点。</p>
+<p>另一个很重要的因素是Annotation定义了一种标准的描述元数据的方式。在这之前，开发人员通常使用他们自己的方式定义元数据。例如，使用标记interfaces，注释，transient关键字等等。每个程序员按照自己的方式定义元数据，而不像Annotation这种标准的方式。</p>
+<p>目前，许多框架将XML和Annotation两种方式结合使用，平衡两者之间的利弊。</p>
+<h2 id="Annotation_u662F_u5982_u4F55_u5DE5_u4F5C_u7684_uFF1F_u600E_u4E48_u7F16_u5199_u81EA_u5B9A_u4E49_u7684Annotation_uFF1F"><a href="#Annotation_u662F_u5982_u4F55_u5DE5_u4F5C_u7684_uFF1F_u600E_u4E48_u7F16_u5199_u81EA_u5B9A_u4E49_u7684Annotation_uFF1F" class="headerlink" title="Annotation是如何工作的？怎么编写自定义的Annotation？"></a>Annotation是如何工作的？怎么编写自定义的Annotation？</h2><p>在讲述这部分之前，建议你首先下载Annotation的示例代码AnnotationsSample.zip 。下载之后放在你习惯使用的IDE中，这些代码会帮助你更好的理解Annotation机制。</p>
+<p>编写Annotation非常简单，可以将Annotation的定义同接口的定义进行比较。我们来看两个例子：一个是标准的注解<code>@Override</code>，另一个是用户自定义注解<code>@Todo</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="annotation">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line">	<span class="keyword">public</span> <span class="annotation">@interface</span> Override &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于<code>@Override</code>注释你可能有些疑问，它什么都没做，那它是如何检查在父类中有一个同名的函数呢。当然，不要惊讶，我是逗你玩的。<code>@Override</code>注解的定义不仅仅只有这么一点代码。这部分内容很重要，我不得不再次重复：Annotations仅仅是元数据，和业务逻辑无关。理解起来有点困难，但就是这样。如果Annotations不包含业务逻辑，那么必须有人来实现这些逻辑。元数据的用户来做这个事情。Annotations仅仅提供它定义的属性(类/方法/包/域)的信息。Annotations的用户(同样是一些代码)来读取这些信息并实现必要的逻辑。</p>
+<p>当我们使用Java的标注Annotations(例如@Override)时，JVM就是一个用户，它在字节码层面工作。到这里，应用开发人员还不能控制也不能使用自定义的注解。因此，我们讲解一下如何编写自定义的Annotations。</p>
+<p>我们来逐个讲述编写自定义Annotations的要点。上面的例子中，你看到一些注解应用在注解上。</p>
+<p>J2SE5.0版本在<code>java.lang.annotation</code>提供了四种元注解，专门注解其他的注解：</p>
+<p><code>@Documented</code> –注解是否将包含在JavaDoc中<br><code>@Retention</code> –什么时候使用该注解<br><code>@Target</code> –注解用于什么地方<br><code>@Inherited</code> – 是否允许子类继承该注解</p>
+<p><code>@Documented</code>–一个简单的Annotations标记注解，表示是否将注解信息添加在java文档中。</p>
+<p><code>@Retention</code>– 定义该注解的生命周期。</p>
+<p><code>RetentionPolicy.SOURCE</code> – 在编译阶段丢弃。这些注解在编译结束之后就不再有任何意义，所以它们不会写入字节码。@Override, @SuppressWarnings都属于这类注解。</p>
+<p><code>RetentionPolicy.CLASS</code> – 在类加载的时候丢弃。在字节码文件的处理中有用。注解默认使用这种方式。</p>
+<p><code>RetentionPolicy.RUNTIME</code>– 始终不会丢弃，运行期也保留该注解，因此可以使用反射机制读取该注解的信息。我们自定义的注解通常使用这种方式。</p>
+<p><code>@Target</code> – 表示该注解用于什么地方。如果不明确指出，该注解可以放在任何地方。以下是一些可用的参数。需要说明的是：属性的注解是兼容的，如果你想给7个属性都添加注解，仅仅排除一个属性，那么你需要在定义target包含所有的属性。</p>
+<p>ElementType.TYPE:用于描述类、接口或enum声明<br>ElementType.FIELD:用于描述实例变量<br>ElementType.METHOD<br>ElementType.PARAMETER<br>ElementType.CONSTRUCTOR<br>ElementType.LOCAL_VARIABLE<br>ElementType.ANNOTATION_TYPE 另一个注释<br>ElementType.PACKAGE 用于记录java文件的package信息</p>
+<p><code>@Inherited</code> – 定义该注释和子类的关系</p>
+<p>那么，注解的内部到底是如何定义的呢？Annotations只支持基本类型、String及枚举类型。注释中所有的属性被定义成方法，并允许提供默认值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="annotation">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="annotation">@interface</span> Todo &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">enum</span> Priority &#123;LOW, MEDIUM, HIGH&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">enum</span> Status &#123;STARTED, NOT_STARTED&#125;</span><br><span class="line">	<span class="function">String <span class="title">author</span><span class="params">()</span> <span class="keyword">default</span> "Yash"</span>;</span><br><span class="line">	<span class="function">Priority <span class="title">priority</span><span class="params">()</span> <span class="keyword">default</span> Priority.LOW</span>;</span><br><span class="line">	<span class="function">Status <span class="title">status</span><span class="params">()</span> <span class="keyword">default</span> Status.NOT_STARTED</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面的例子演示了如何使用上面的注解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Todo</span>(priority = Todo.Priority.MEDIUM, author = <span class="string">"Yashwant"</span>, status = Todo.Status.STARTED)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">incompleteMethod1</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">//Some business logic is written</span></span><br><span class="line"><span class="comment">//But it’s not complete yet</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果注解中只有一个属性，可以直接命名为“value”，使用时无需再标明属性名。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@interface</span> Author&#123;</span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="annotation">@Author</span>(<span class="string">"Yashwant"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">someMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但目前为止一切看起来都还不错。我们定义了自己的注解并将其应用在业务逻辑的方法上。现在我们需要写一个用户程序调用我们的注解。这里我们需要使用反射机制。如果你熟悉反射代码，就会知道反射可以提供类名、方法和实例变量对象。所有这些对象都有<code>getAnnotation()</code>这个方法用来返回注解信息。我们需要把这个对象转换为我们自定义的注释(使用 <code>instanceOf()</code>检查之后)，同时也可以调用自定义注释里面的方法。看看以下的实例代码，使用了上面的注解:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Class businessLogicClass = BusinessLogic.class;</span><br><span class="line"><span class="keyword">for</span>(Method method : businessLogicClass.getMethods()) &#123;</span><br><span class="line">Todo todoAnnotation = (Todo)method.getAnnotation(Todo.class);</span><br><span class="line"><span class="keyword">if</span>(todoAnnotation != <span class="keyword">null</span>) &#123;</span><br><span class="line">		System.out.println(<span class="string">" Method Name : "</span> + method.getName());</span><br><span class="line">		System.out.println(<span class="string">" Author : "</span> + todoAnnotation.author());</span><br><span class="line">		System.out.println(<span class="string">" Priority : "</span> + todoAnnotation.priority());</span><br><span class="line">		System.out.println(<span class="string">" Status : "</span> + todoAnnotation.status());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注解用例</p>
+<p>注解的功能很强大，Spring和Hebernate这些框架在日志和有效性中大量使用了注解功能。注解可以应用在使用标记接口的地方。不同的是标记接口用来定义完整的类，但你可以为单个的方法定义注释，例如是否将一个方法暴露为服务。</p>
+<p>在最新的Servlet3.0中引入了很多新的注解，尤其是和servlet安全相关的注解。</p>
+<p><code>HandlesTypes</code> –该注解用来表示一组传递给ServletContainerInitializer的应用类。</p>
+<p><code>HttpConstraint</code> – 该注解代表所有HTTP方法的应用请求的安全约束，和ServletSecurity注释中定义的HttpMethodConstraint安全约束不同。</p>
+<p><code>HttpMethodConstraint</code> – 指明不同类型请求的安全约束，和ServletSecurity 注解中描述HTTP协议方法类型的注释不同。</p>
+<p><code>MultipartConfig</code> –该注解标注在Servlet上面，表示该Servlet希望处理的请求的 MIME 类型是 multipart/form-data。</p>
+<p><code>ServletSecurity</code> 该注解标注在Servlet继承类上面，强制该HTTP协议请求遵循安全约束。</p>
+<p><code>WebFilter</code> – 该注解用来声明一个Server过滤器；</p>
+<p><code>WebInitParam</code> – 该注解用来声明Servlet或是过滤器的中的初始化参数，通常配合 @WebServlet 或者 @WebFilter 使用。</p>
+<p><code>WebListener</code> –该注解为Web应用程序上下文中不同类型的事件声明监听器。</p>
+<p><code>WebServlet</code> –该注解用来声明一个Servlet的配置。</p>
+<h2 id="ADF__28_u5E94_u7528_u7A0B_u5E8F_u6846_u67B6_29_u548C_u6CE8_u89E3"><a href="#ADF__28_u5E94_u7528_u7A0B_u5E8F_u6846_u67B6_29_u548C_u6CE8_u89E3" class="headerlink" title="ADF (应用程序框架)和注解"></a>ADF (应用程序框架)和注解</h2><p>现在我们开始讨论文章的最后一部分了。应用程序框架，被称为<code>ADF</code>，由Oracle开发用来创建Oracle融合应用。我们已经了解了注解的优缺点，也知道如何编写自定义的注解，但我们应该将注解应用在ADF的哪部分呢？ADF是否提供了一些朴素的注解？很好的问题，确实在ADF中大量使用注解有一些限制。之前提到的应用框架如Spring和Hibernate使用AOP(面向侧面的程序设计)。在AOP中，框架提供了一种机制，在事件的预处理和后续处理中注入代码。例如：你有一个钩子用来在方法执行之前和之后添加代码，所以你可以在这些地方编写你的用户代码。ADF不使用AOP。如果我们有任何注解的用例可用，我们可能需要通过继承的方式实现。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yerida.github.io/2015/05/01/How-Java-Annotation-work/" data-title="Java中的注解(Annotation)工作原理 | Daniel&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/05/13/intellij-idea-15-keyboard-shortcuts-you-cannot-miss/" title="IntelliJ IDEA 15常用快捷键(Mac)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  IntelliJ IDEA 15常用快捷键(Mac)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/03/02/visual-git-guide/"  title="图解Git">
+ <strong>下一篇：</strong><br/> 
+ <span>图解Git
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/05/01/How-Java-Annotation-work/" data-title="Java中的注解(Annotation)工作原理" data-url="http://yerida.github.io/2015/05/01/How-Java-Annotation-work/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4EC0_u4E48_u662F_u6CE8_u89E3_28Annotation_29_uFF1F"><span class="toc-number">2.</span> <span class="toc-text">什么是注解(Annotation)？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4E3A_u4EC0_u4E48_u8981_u5F15_u5165_u6CE8_u89E3_uFF1F"><span class="toc-number">3.</span> <span class="toc-text">为什么要引入注解？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Annotation_u662F_u5982_u4F55_u5DE5_u4F5C_u7684_uFF1F_u600E_u4E48_u7F16_u5199_u81EA_u5B9A_u4E49_u7684Annotation_uFF1F"><span class="toc-number">4.</span> <span class="toc-text">Annotation是如何工作的？怎么编写自定义的Annotation？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ADF__28_u5E94_u7528_u7A0B_u5E8F_u6846_u67B6_29_u548C_u6CE8_u89E3"><span class="toc-number">5.</span> <span class="toc-text">ADF (应用程序框架)和注解</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="yerida" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/C-C/" title="C/C++">C/C++<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IDE/" title="IDE">IDE<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-C/" title="C/C++">C/C++<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,World! <br/>
+			</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/yerida" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Daniel Ye">Daniel Ye</a>
+		
+		
+		</p>
+
+		<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','CzBsTosyC-ehCD3yfiLY','2.0.0');
+</script>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yerida"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?cb65ce2afca0d500ca56964ac2525a4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
+
+
+<a href="https://github.com/yerida"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
